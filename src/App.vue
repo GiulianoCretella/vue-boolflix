@@ -8,6 +8,12 @@
             <button @click="searchMovie()" class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
           </div>
         </div>
+        <div class="d-block" v-for="(film,index) in filmSpecifics" :key="index">
+          <span>{{'Titolo:'+' '+film.title}}</span>
+          <span>{{'Titolo in lingua originale:'+' '+film.original_title}}</span> 
+          <span> {{'Lingua:'+' '+film.original_language}}</span>   
+          <span>{{'Voto:'+' '+film.vote_average}}</span> 
+        </div>
       </div>
     </div>
   </div>
@@ -20,7 +26,8 @@ export default{
   data(){
     return {
       inputText:'',
-      apiPath:'https://api.themoviedb.org/3/search/movie/?api_key=c13f1efdfd69df15ca0fe5b05aab0175&query='
+      apiPath:'https://api.themoviedb.org/3/search/movie/?api_key=c13f1efdfd69df15ca0fe5b05aab0175&query=',
+      filmSpecifics:[],
     }
   },
   methods:{
@@ -28,7 +35,8 @@ export default{
       let transformedTitle=this.inputText.split(' ').join('+');
       console.log(transformedTitle);
       axios.get(this.apiPath+transformedTitle+'&language=it-IT').then((res)=>{
-          console.log(res)
+          this.filmSpecifics = res.data.results;
+          console.log(this.filmSpecifics)
         }).catch((error)=>{
           console.log(error)
         })
@@ -40,5 +48,8 @@ export default{
 
 <style lang="scss">
 @import './style/general.scss';
+span{
+  margin-right: 4%;
+}
 
 </style>
