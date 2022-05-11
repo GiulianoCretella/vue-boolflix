@@ -3,7 +3,8 @@
         <span>{{'Titolo:'+' '+[item.title ? item.title : item.name]}}</span>
         <span>{{'Titolo in lingua originale:'+' '+[item.original_title ? item.original_title : item.original_name]}}</span> 
         <span>Lingue: <flag :iso="language(item)"/></span>   
-        <span>{{'Voto:'+' '+item.vote_average}}</span> 
+        <span>{{'Voto:'+' '+item.vote_average}}</span>
+        <img class="img-fluid" :src="image + item.poster_path" alt="">
     </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
     },
     data(){
         return{
-
+            image:'https://image.tmdb.org/t/p/w342'
         }
     },
     methods:{
