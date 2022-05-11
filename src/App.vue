@@ -8,10 +8,10 @@
             <button @click="searchMovie()" class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
           </div>
         </div>
-        <div class="d-block" v-for="(film,index) in filmSpecifics" :key="index">
+        <div class="border d-block" v-for="(film,index) in filmSpecifics" :key="index">
           <span>{{'Titolo:'+' '+film.title}}</span>
           <span>{{'Titolo in lingua originale:'+' '+film.original_title}}</span> 
-          <span> {{'Lingua:'+' '+film.original_language}}</span>   
+          <span>Lingue: <flag :iso="language(film)"/></span>   
           <span>{{'Voto:'+' '+film.vote_average}}</span> 
         </div>
       </div>
@@ -21,12 +21,15 @@
 
 <script>
 import axios from 'axios';
+
+
 export default{
   name:'app',
   data(){
     return {
       inputText:'',
-      apiPath:'https://api.themoviedb.org/3/search/movie/?api_key=c13f1efdfd69df15ca0fe5b05aab0175&query=',
+      apiKey:'c13f1efdfd69df15ca0fe5b05aab0175',
+      apiPath:'https://api.themoviedb.org/3/search/',
       filmSpecifics:[],
     }
   },
@@ -34,12 +37,28 @@ export default{
     searchMovie(){
       let transformedTitle=this.inputText.split(' ').join('+');
       console.log(transformedTitle);
-      axios.get(this.apiPath+transformedTitle+'&language=it-IT').then((res)=>{
+      const queryParams ={
+        params:{
+          api_key:this.apiKey,
+          query:transformedTitle,
+          language:'it-IT',
+        }
+      }
+      axios.get(this.apiPath+'movie',queryParams).then((res)=>{
           this.filmSpecifics = res.data.results;
           console.log(this.filmSpecifics)
-        }).catch((error)=>{
+      }).catch((error)=>{
           console.log(error)
-        })
+      })
+    },
+    language(film){
+      if(film.original_language === 'en'){
+        return film.original_language = 'gb'
+      }else if(film.original_language === 'ja'){
+        return film.original_language = 'jp'
+      }else{
+        return film.original_language
+      }
     }
   },
 }
