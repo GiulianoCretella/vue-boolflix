@@ -4,7 +4,7 @@
       <search-bar @search="search"/>
       <div class="row">
         <h1>boolFix</h1>
-        <div class="col-2 border" v-for="(film,index) in filmSpecifics" :key="index">
+        <div class="col-2 border" v-for="(film,index) in finalSearch" :key="index">
           <app-grid :item="film"/>
         </div>
       </div>
@@ -34,6 +34,11 @@ export default{
       film:''
     }
   },
+  computed:{
+    finalSearch(){
+      return [...this.seriesSpecifics,...this.movieSpecifics]
+    }
+  },
   methods:{
     search(val){
       this.film= val;
@@ -46,11 +51,11 @@ export default{
       }
       this.searchSeries(queryParams);
       this.searchMovies(queryParams);
-      this.filmSpecifics=[...this.seriesSpecifics,...this.movieSpecifics]
+      
     },
     searchSeries(queryParams){
        axios.get(this.apiPath+'tv',queryParams).then((res)=>{
-          this.seriesSpecifics=[...res.data.results];
+          this.seriesSpecifics = res.data.results;
           console.log(this.seriesSpecifics)
       }).catch((error)=>{
           console.log(error)
@@ -58,7 +63,7 @@ export default{
     },
     searchMovies(queryParams){
       axios.get(this.apiPath+'movie',queryParams).then((res)=>{
-          this.movieSpecifics=[...res.data.results];
+          this.movieSpecifics = res.data.results;
           console.log(this.movieSpecifics)
       }).catch((error)=>{
           console.log(error)
