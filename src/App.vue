@@ -1,18 +1,11 @@
 <template>
   <div id="app">
     <div class="container">
+      <search-bar @search="search"/>
       <div class="row">
-        <div class="col-12">
-          <div class="input-group my-3">
-            <input type="text" class="form-control" placeholder="Cerca Per Titolo" v-model="inputText" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button @click="searchMovie()" class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
-          </div>
-        </div>
-        <div class="border d-block" v-for="(film,index) in filmSpecifics" :key="index">
-          <span>{{'Titolo:'+' '+film.title}}</span>
-          <span>{{'Titolo in lingua originale:'+' '+film.original_title}}</span> 
-          <span>Lingue: <flag :iso="language(film)"/></span>   
-          <span>{{'Voto:'+' '+film.vote_average}}</span> 
+        <h1>boolFix</h1>
+        <div class="col-2 border" v-for="(film,index) in filmSpecifics" :key="index">
+          <app-grid :item="film"/>
         </div>
       </div>
     </div>
@@ -21,29 +14,46 @@
 
 <script>
 import axios from 'axios';
+import SearchBar from './components/SearchBar.vue';
+import AppGrid from './components/AppGrid.vue';
 
 
 export default{
+  components: {
+    SearchBar,
+    AppGrid 
+  },
   name:'app',
   data(){
     return {
-      inputText:'',
       apiKey:'c13f1efdfd69df15ca0fe5b05aab0175',
       apiPath:'https://api.themoviedb.org/3/search/',
       filmSpecifics:[],
+      film:'',
     }
   },
   methods:{
-    searchMovie(){
-      let transformedTitle=this.inputText.split(' ').join('+');
-      console.log(transformedTitle);
+    search(val){
+      this.film= val;
       const queryParams ={
         params:{
           api_key:this.apiKey,
-          query:transformedTitle,
+          query:this.film,
           language:'it-IT',
         }
       }
+      this.searchSeries(queryParams);
+      this.searchMovies(queryParams);
+    },
+    searchSeries(queryParams){
+       axios.get(this.apiPath+'tv',queryParams).then((res)=>{
+          this.filmSpecifics = res.data.results;
+          console.log(this.filmSpecifics)
+      }).catch((error)=>{
+          console.log(error)
+      })
+    },
+    searchMovies(queryParams){
       axios.get(this.apiPath+'movie',queryParams).then((res)=>{
           this.filmSpecifics = res.data.results;
           console.log(this.filmSpecifics)
@@ -51,15 +61,7 @@ export default{
           console.log(error)
       })
     },
-    language(film){
-      if(film.original_language === 'en'){
-        return film.original_language = 'gb'
-      }else if(film.original_language === 'ja'){
-        return film.original_language = 'jp'
-      }else{
-        return film.original_language
-      }
-    }
+   
   },
 }
 
@@ -67,6 +69,11 @@ export default{
 
 <style lang="scss">
 @import './style/general.scss';
+h1{
+  font-size: 100px;
+  -webkit-text-stroke: 1px red;
+   text-shadow: 3px 0 2px red;
+}
 span{
   margin-right: 4%;
 }
