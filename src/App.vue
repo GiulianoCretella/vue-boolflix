@@ -28,8 +28,10 @@ export default{
     return {
       apiKey:'c13f1efdfd69df15ca0fe5b05aab0175',
       apiPath:'https://api.themoviedb.org/3/search/',
+      seriesSpecifics:[],
+      movieSpecifics:[],
       filmSpecifics:[],
-      film:'',
+      film:''
     }
   },
   methods:{
@@ -44,19 +46,20 @@ export default{
       }
       this.searchSeries(queryParams);
       this.searchMovies(queryParams);
+      this.filmSpecifics=[...this.seriesSpecifics,...this.movieSpecifics]
     },
     searchSeries(queryParams){
        axios.get(this.apiPath+'tv',queryParams).then((res)=>{
-          this.filmSpecifics = res.data.results;
-          console.log(this.filmSpecifics)
+          this.seriesSpecifics=[...res.data.results];
+          console.log(this.seriesSpecifics)
       }).catch((error)=>{
           console.log(error)
       })
     },
     searchMovies(queryParams){
       axios.get(this.apiPath+'movie',queryParams).then((res)=>{
-          this.filmSpecifics = res.data.results;
-          console.log(this.filmSpecifics)
+          this.movieSpecifics=[...res.data.results];
+          console.log(this.movieSpecifics)
       }).catch((error)=>{
           console.log(error)
       })

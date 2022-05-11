@@ -1,7 +1,7 @@
 <template>
     <div>
-        <span>{{'Titolo:'+' '+item.title ? item.title : item.name}}</span>
-        <span>{{'Titolo in lingua originale:'+' '+item.original_title ? item.original_title : item.original_name}}</span> 
+        <span>{{'Titolo:'+' '+[item.title ? item.title : item.name]}}</span>
+        <span>{{'Titolo in lingua originale:'+' '+[item.original_title ? item.original_title : item.original_name]}}</span> 
         <span>Lingue: <flag :iso="language(item)"/></span>   
         <span>{{'Voto:'+' '+item.vote_average}}</span> 
     </div>
