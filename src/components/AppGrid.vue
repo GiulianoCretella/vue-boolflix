@@ -1,9 +1,12 @@
 <template>
     <div>
-        <span>{{'Titolo:'+' '+[item.title ? item.title : item.name]}}</span>
-        <span>{{'Titolo in lingua originale:'+' '+[item.original_title ? item.original_title : item.original_name]}}</span> 
-        <span>Lingue: <flag :iso="language(item)"/></span>   
-        <span>{{'Voto:'+' '+item.vote_average}}</span>
+        <div>{{'Titolo:'+' '+[item.title ? item.title : item.name]}}</div>
+        <div>{{'Titolo in lingua originale:'+' '+[item.original_title ? item.original_title : item.original_name]}}</div> 
+        <div>Lingua: <flag :iso="language(item)"/></div>   
+        <div>
+            <span v-for="(star,index) in tranfsormScale(item)" :key="index"><i class="fa-solid fa-star golden-star"></i></span>
+            <span v-for="(star,index) in 5 - tranfsormScale(item)" :key="index"><i class="fa-solid fa-star empty-star"></i></span>
+        </div>
         <img class="img-fluid" :src="image + item.poster_path" alt="">
     </div>
 </template>
@@ -16,7 +19,7 @@ export default {
     },
     data(){
         return{
-            image:'https://image.tmdb.org/t/p/w342'
+            image:'https://image.tmdb.org/t/p/w342',
         }
     },
     methods:{
@@ -28,14 +31,20 @@ export default {
             }else{
                 return film.original_language
             }
-        }
+        },
+        tranfsormScale(film){
+          return parseInt(film.vote_average / 2)
+        },
     }
      
 }
 </script>
 
 <style lang="scss">
-span{
-    display: block;
+.golden-star{
+    color: #D6B64C;
+}
+.empty-star{
+    color:#D1D1D1;
 }
 </style>
