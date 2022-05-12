@@ -3,7 +3,7 @@
     <img class="img-fluid h-100 w-100" :src="image + imageFunc" alt="">
     <div class="description-container">
         <div>Titolo: <span>{{item.title ? item.title : item.name}}</span></div>
-        <div>Titolo in lingua originale: <span>{{item.original_title ? item.original_title : item.original_name}}</span></div> 
+        <div>Titolo in lingua originale: <span>{{item.original_title ? titleFunc : titleFunc}}</span></div> 
         <div>Lingua: <flag :iso="language"/></div> 
         <div>Overview: <span>{{overviewFunc}}</span></div>  
         <div>
@@ -52,6 +52,13 @@ export default {
             } else{
                 return this.item.overview
             }
+        },
+        titleFunc(){
+            if(this.item.original_title === this.item.title || this.item.original_name === this.item_name){
+                return 'null'
+            } else {
+                return this.item.original_title || this.item.original_name
+            }
         }
     },
 }
@@ -64,16 +71,16 @@ export default {
     padding: 2px;
     position: relative;
     overflow-y: auto;
-    &:hover img{
-        display: none;
-    };
     .description-container{
         width: 100%;
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
         display: none;
         padding: 10px;
+        background-color: #9a9a9adf;
+        overflow: auto;
     }
     &:hover .description-container{
         display: block;
@@ -88,8 +95,8 @@ div{
     font-size: 0.9em;
 }
 span{
-    font-weight: 200;
-    color:#8B8B8B ;
+    font-weight: 400;
+    color:#000000 ;
 }
  .golden-star{
     color: #D6B64C;
