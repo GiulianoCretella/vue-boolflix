@@ -2,7 +2,7 @@
 <div class="container">
  <section class="row align-items-center">
       <div class="col-6 g-0">
-          <span class="logo">francaflix <i class="fa-regular fa-registered"></i></span>
+          <span class="logo">boolflix <i class="fa-regular fa-registered"></i></span>
       </div>
     <search-bar @search="search"/>
   </section>
