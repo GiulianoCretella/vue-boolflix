@@ -3,7 +3,7 @@
     <img class="img-fluid h-100 w-100" :src="image + imageFunc" alt="">
     <div class="description-container">
         <div>Titolo: <span>{{item.title ? item.title : item.name}}</span></div>
-        <div>Titolo in lingua originale: <span>{{item.original_title ? titleFunc : titleFunc}}</span></div> 
+        <div v-if="item.original_title != item.title || item.original_name != item.name">Titolo in lingua originale: <span>{{item.original_title ? item.original_title : item.original_name}}</span></div> 
         <div>Lingua: <flag :iso="language"/></div> 
         <div>Overview: <span>{{overviewFunc}}</span></div>  
         <div>
@@ -53,13 +53,7 @@ export default {
                 return this.item.overview
             }
         },
-        titleFunc(){
-            if(this.item.original_title === this.item.title || this.item.original_name === this.item_name){
-                return 'null'
-            } else {
-                return this.item.original_title || this.item.original_name
-            }
-        }
+        
     },
 }
 </script>
