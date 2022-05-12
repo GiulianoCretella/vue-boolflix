@@ -2,7 +2,7 @@
 <div class="container">
  <section class="row align-items-center">
       <div class="col-6 g-0">
-          <span class="logo">boolFlix <i class="fa-regular fa-registered"></i></span>
+          <span class="logo">francaflix <i class="fa-regular fa-registered"></i></span>
       </div>
     <search-bar @search="search"/>
   </section>
@@ -68,15 +68,15 @@ export default {
 <style lang="scss" scoped>
 
 .logo{
-   font-size: 60px;
+   font-size: 50px;
    -webkit-text-stroke: 1px rgb(35, 0, 0);
-   text-shadow: 3px 0.5px 2px rgb(38, 2, 2);
-   color: rgb(196, 2, 2);
+   text-shadow: 4px 0.5px 2px rgb(38, 2, 2);
+   color: rgb(255, 6, 6);
    font-weight:bold;
    font-family: 'Koulen', 'cursive';
 }
 .fa-registered{
-    font-size: 20px;
+    font-size: 15px;
     color: white; 
     -webkit-text-stroke: 0.2px black;
     text-shadow: none;
