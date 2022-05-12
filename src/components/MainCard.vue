@@ -1,15 +1,18 @@
 <template>
-  <div class="poster-container align-items-center">
+<div class="poster-container align-items-center">
     <img class="img-fluid h-100 w-100" :src="image + imageFunc" alt="">
-    <!-- <div>{{'Titolo:'+' '+[item.title ? item.title : item.name]}}</div>
-    <div>{{'Titolo in lingua originale:'+' '+[item.original_title ? item.original_title : item.original_name]}}</div> 
-    <div>Lingua: <flag :iso="language"/></div>   
-    <div>
-        <span v-for="(n,index) in 5" :key="index">
-            <i :class="n <= transformScale ? 'fa-solid fa-star golden-star' : 'fa-solid fa-star empty-star' "></i>
-        </span>
-    </div>   -->
+    <div class="description-container">
+        <div>Titolo: <span>{{item.title ? item.title : item.name}}</span></div>
+        <div>Titolo in lingua originale: <span>{{item.original_title ? item.original_title : item.original_name}}</span></div> 
+        <div>Lingua: <flag :iso="language"/></div> 
+        <div>Overview: <span>{{overviewFunc}}</span></div>  
+        <div>
+            <span v-for="(n,index) in 5" :key="index">
+                <i :class="n <= transformScale ? 'fa-solid fa-star golden-star' : 'fa-solid fa-star empty-star' "></i>
+            </span>
+        </div> 
     </div>
+</div>
 </template>
 
 <script>
@@ -43,17 +46,52 @@ export default {
         transformScale(){
            return parseInt(Math.ceil(this.item.vote_average / 2))
         },
+        overviewFunc(){
+            if(this.item.overview === ''){
+                return 'Descrizione non disponibile'
+            } else{
+                return this.item.overview
+            }
+        }
     },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .poster-container{
     min-width: 180px;
     height: 260px;
-    padding: 5px;
+    padding: 2px;
+    position: relative;
+    overflow-y: auto;
+    &:hover img{
+        display: none;
+    };
+    .description-container{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        padding: 10px;
+    }
+    &:hover .description-container{
+        display: block;
+    }
+    
 }
-/* .golden-star{
+div{
+    display: block;
+    color: white;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9em;
+}
+span{
+    font-weight: 200;
+    color:#8B8B8B ;
+}
+ .golden-star{
     color: #D6B64C;
 }
 .empty-star{
@@ -61,5 +99,5 @@ export default {
 }
 .flag-icon-squared{
     background-color: black;
-} */
+} 
 </style>

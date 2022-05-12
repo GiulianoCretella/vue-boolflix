@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-2" v-for="(film,index) in finalSearch" :key="index">
+        <div class="col-sm-6 col-md-3 col-xl-2" v-for="(film,index) in finalSearch" :key="index">
           <main-card :item="film"/>
         </div>
     </div>

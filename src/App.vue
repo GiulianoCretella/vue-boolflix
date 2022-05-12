@@ -25,9 +25,12 @@ export default{
 @import './style/general.scss';
 header{
   background-color: $bg_header;
+  height: 70px;
 }
 main{
   background-color: $bg_main;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
 }
 span{
   margin-right: 4%;
